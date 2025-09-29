@@ -1,9 +1,9 @@
-package SPAC.Cereal.service;
+package SPAC.Cereal.model;
 
 public enum Manufacturer {
     A("American Home Food Products"),
     G("General Mills"),
-    K("Kelloggs"),
+    K("Kellogg's"),
     N("Nabisco"),
     P("Post"),
     Q("Quaker Oats"),
@@ -15,7 +15,8 @@ public enum Manufacturer {
         this.fullName = fullName;
     }
 
-    public String getFullName() {
+    @Override
+    public String toString() {
         return fullName;
     }
 }

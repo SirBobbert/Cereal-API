@@ -1,9 +1,7 @@
-package SPAC.Cereal.service;
+package SPAC.Cereal.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
 
 @Data
 @Builder
@@ -22,19 +20,16 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private CerealType type;
 
-    // Ints
-    private float calories;
-    private float protein;
-    private float fat;
-    private float sodium;
-    private float sugars;
-    private float potass;
-    private float vitamins;
-    private float shelf;
-
-    // Floats
+    private int calories;
+    private int protein;
+    private int fat;
+    private int sodium;
     private float fiber;
     private float carbo;
+    private float sugars;
+    private float potass;
+    private int vitamins;
+    private int shelf;
     private float weight;
     private float cups;
     private float rating;

@@ -1,20 +1,24 @@
 package SPAC.Cereal;
 
-import SPAC.Cereal.service.DBUpdater;
+import SPAC.Cereal.util.DBUpdater;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
+@RequiredArgsConstructor
 public class CerealApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CerealApplication.class, args);
+    }
 
-        // path to csv
-        // "C:\Specialisterne - Opgaver\Uge 3\data\Cereal.csv"
-
-        DBUpdater.addToSql();
-
-
+    @Bean
+    CommandLineRunner loadData(DBUpdater updater) {
+        return args -> {
+            updater.addToSql();
+        };
     }
 }
