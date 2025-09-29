@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class CerealApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CerealApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(CerealApplication.class, args);
+    }
 }
