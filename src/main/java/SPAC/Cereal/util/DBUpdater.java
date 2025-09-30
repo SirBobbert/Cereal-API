@@ -20,59 +20,130 @@ public class DBUpdater {
     @Value("${data.csv.path}")
     private String csvPath;
 
+    int lineNo, inserted = 0;
+    String line;
+
     @Transactional
     public void addToSql() {
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvPath))) {
-            String line;
 
-            // skip first two lines (heading and datatype lines)
+            // skip header lines
             br.readLine();
             br.readLine();
 
+            // read each line
             while ((line = br.readLine()) != null) {
+                lineNo++;
                 if (line.isBlank()) continue;
 
-                String[] data = line.split(";");
+                try {
+                    // split line into fields by semicolon
+                    String[] data = line.split(";");
 
-                // if data length is less than 16, skip this line
-                if (data.length < 16) continue;
+                    // validate and normalize fields
+                    String[] v = validateAndNormalize(data);
 
-                Product p = Product.builder()
-                        .name(data[0])
-                        .mfr(Manufacturer.valueOf(data[1]))
-                        .type(CerealType.valueOf(data[2]))
-                        .calories(Integer.parseInt(data[3]))
-                        .protein(Integer.parseInt(data[4]))
-                        .fat(Integer.parseInt(data[5]))
-                        .sodium(Integer.parseInt(data[6]))
-                        .sugars(Float.parseFloat(data[7]))
-                        .potass(Float.parseFloat(data[8]))
-                        .vitamins(Integer.parseInt(data[9]))
-                        .shelf(Integer.parseInt(data[10]))
-                        .fiber(Float.parseFloat(data[11]))
-                        .carbo(Float.parseFloat(data[12]))
-                        .weight(Float.parseFloat(data[13]))
-                        .cups(Float.parseFloat(data[14]))
-                        // helper class to parse this due to it having multiple points
-                        .rating(parseFloatWithMultiplePoints(data[15]))
-                        .build();
+                    // create Product object
+                    Product p = Product.builder()
+                            .name(v[0])
+                            .mfr(Manufacturer.valueOf(v[1]))
+                            .type(CerealType.valueOf(v[2]))
+                            .calories(Integer.parseInt(v[3]))
+                            .protein(Integer.parseInt(v[4]))
+                            .fat(Integer.parseInt(v[5]))
+                            .sodium(Integer.parseInt(v[6]))
+                            .fiber(Float.parseFloat(v[7]))
+                            .carbo(Float.parseFloat(v[8]))
+                            .sugars(Float.parseFloat(v[9]))
+                            .potass(Float.parseFloat(v[10]))
+                            .vitamins(Integer.parseInt(v[11]))
+                            .shelf(Integer.parseInt(v[12]))
+                            .weight(Float.parseFloat(v[13]))
+                            .cups(Float.parseFloat(v[14]))
+                            .rating(Float.parseFloat(v[15]))
+                            .build();
 
-                System.out.println("Inserting: " + p);
-                productRepository.save(p);
+                    // save to database
+                    productRepository.save(p);
+                    inserted++;
+
+                } catch (Exception ex) {
+                    System.err.println("================================================");
+                    System.err.println("Skipping line " + lineNo);
+                    System.err.println("Reason: " + ex.getMessage());
+                    System.err.println("Line: " + line);
+                    System.err.println("================================================");
+                }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException io) {
+            throw new RuntimeException(io);
         }
-        System.out.println("Data import completed.");
+        System.out.println("================================================");
+        System.out.println("Inserted " + inserted + " records into the database.");
+        System.out.println("================================================");
     }
 
-    private static Float parseFloatWithMultiplePoints(String s) {
-        s = s.trim().replace(',', '.');
-        int firstDot = s.indexOf('.');
-        if (firstDot != -1) {
-            s = s.substring(0, firstDot + 1) + s.substring(firstDot + 1).replace(".", "");
+    // iterates through each line, validates and normalizes them
+    // normalization: trims whitespace, replaces commas with dots in floats, removes extra dots in rating
+    // validation: checks for null/empty, correct enum values, correct number formats
+    // returns normalized array or throws IllegalArgumentException
+    public static String[] validateAndNormalize(String[] data) {
+
+        // check for null or incorrect length
+        if (data == null || data.length != 16)
+            throw new IllegalArgumentException("Expected 16 fields, got " + (data == null ? 0 : data.length));
+
+        // trim whitespace and check for empty fields
+        for (int i = 0; i < data.length; i++) {
+            if (data[i] == null || data[i].trim().isEmpty())
+                throw new IllegalArgumentException("Field " + (i + 1) + " is null or empty");
+            data[i] = data[i].trim();
         }
-        return Float.valueOf(s);
+
+        // validate enums
+        if (!data[1].matches("[AGKNPQR]"))
+            throw new IllegalArgumentException("Invalid manufacturer code: " + data[1]);
+
+        if (!data[2].matches("[HC]"))
+            throw new IllegalArgumentException("Invalid cereal type code: " + data[2]);
+
+        // validate integers and floats
+        int[] intIdx = {3, 4, 5, 6, 10, 11, 12};
+        for (int idx : intIdx) {
+            try {
+                Integer.parseInt(data[idx]);
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Field " + (idx + 1) + " must be an integer: " + data[idx]);
+            }
+        }
+
+        // validate and normalize floats (replace commas with dots)
+        int[] floatIdx = {7, 8, 9, 13, 14};
+        for (int idx : floatIdx) {
+            String norm = data[idx].replace(',', '.');
+            try {
+                Float.parseFloat(norm);
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Field " + (idx + 1) + " must be a float: " + data[idx]);
+            }
+            data[idx] = norm;
+        }
+
+        // special handling for rating (field 16)
+        String r = data[15].replace(',', '.').trim();
+        int firstDot = r.indexOf('.');
+        if (firstDot >= 0) {
+            r = r.substring(0, firstDot + 1) + r.substring(firstDot + 1).replace(".", "");
+        }
+        try {
+            Float.parseFloat(r);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Field 16 must be a float: " + data[15]);
+        }
+        data[15] = r;
+
+        // return normalized data
+        return data;
     }
 }
