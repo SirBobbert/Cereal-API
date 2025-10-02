@@ -2,64 +2,65 @@ package SPAC.Cereal.controller;
 
 import SPAC.Cereal.model.Product;
 import SPAC.Cereal.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("api/products")
+@RequestMapping("/api/products")
 public class ProductController {
 
     private final ProductService service;
 
-    @Autowired
     public ProductController(ProductService service) {
         this.service = service;
     }
 
     @PostMapping
-    public ResponseEntity<Optional<Product>> createProduct(@RequestBody Product product) {
-        Optional<Product> result = Optional.ofNullable(service.createProduct(product));
-        return ResponseEntity.ok(result);
+    public ResponseEntity<Product> create(@RequestBody @Valid Product p) {
+        Product saved = service.createProduct(p);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(saved.getId()).toUri();
+        return ResponseEntity.created(location).body(saved);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Product>> getProductById(@PathVariable int id) {
-        Optional<Product> product = service.getById(id);
-        return ResponseEntity.ok(product);
+    public ResponseEntity<Product> getById(@PathVariable int id) {
+        return service.getById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-
     @GetMapping("/all")
-    public ResponseEntity<List<Product>> getAllProducts() {
-        List<Product> products = service.getAll();
-        return ResponseEntity.ok(products);
+    public ResponseEntity<List<Product>> getAll() {
+        return ResponseEntity.ok(service.getAll());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Optional<Product>> updateProduct(@PathVariable int id, @RequestBody Product product) {
-        Optional<Product> updatedProduct = service.updateProduct(id, product);
-        return ResponseEntity.ok(updatedProduct);
+    public ResponseEntity<Product> update(@PathVariable int id, @RequestBody @Valid Product payload) {
+        return service.updateProduct(id, payload)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable int id) {
-        service.deleteProduct(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Object> delete(@PathVariable int id) {
+        if (service.getById(id).isEmpty()) return ResponseEntity.notFound().build();
+        return null;
     }
 
     @GetMapping("/filter/fat/{value}")
-    public ResponseEntity<List<Product>> filterProductsByFat(@PathVariable int value) {
-        List<Product> products = service.findByFat(value);
-        return ResponseEntity.ok(products);
+    public ResponseEntity<List<Product>> filterByFat(@PathVariable int value) {
+        return ResponseEntity.ok(service.findByFat(value));
     }
 
     @GetMapping("/filter/mfr/{mfr}")
-    public ResponseEntity<List<Product>> filterProductsByManufacturer(@PathVariable String mfr) {
-        List<Product> products = service.findByMfr(mfr);
-        return ResponseEntity.ok(products);
+    public ResponseEntity<List<Product>> filterByMfr(@PathVariable String mfr) {
+        return ResponseEntity.ok(service.findByMfr(mfr));
     }
 }

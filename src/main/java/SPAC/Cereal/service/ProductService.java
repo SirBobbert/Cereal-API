@@ -56,10 +56,10 @@ public class ProductService {
         return Optional.of(repository.save(product));
     }
 
-    public Optional<Product> deleteProduct(int id) {
+    public Product deleteProduct(int id) {
         Product product = repository.findById(id).orElseThrow();
         repository.deleteById(id);
-        return Optional.of(product);
+        return product;
     }
 
 

@@ -18,9 +18,10 @@ public class CerealApplication {
 
     @Bean
     @ConditionalOnProperty(name = "app.seed.enabled", havingValue = "true")
-    CommandLineRunner loadData(DBUpdater updater) {
+    CommandLineRunner injectDB(DBUpdater updater) {
         return args -> {
-            updater.addToSql();
+            updater.addAdminUserToDB();
+            updater.addProductsToDB();
         };
     }
 }

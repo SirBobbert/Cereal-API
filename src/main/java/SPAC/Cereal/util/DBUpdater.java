@@ -3,7 +3,10 @@ package SPAC.Cereal.util;
 import SPAC.Cereal.model.CerealType;
 import SPAC.Cereal.model.Manufacturer;
 import SPAC.Cereal.model.Product;
+import SPAC.Cereal.model.User;
 import SPAC.Cereal.repository.ProductRepository;
+import SPAC.Cereal.repository.UserRepository;
+import SPAC.Cereal.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +19,7 @@ import java.io.*;
 public class DBUpdater {
 
     private final ProductRepository productRepository;
+    private final UserService userService;
 
     @Value("${data.csv.path}")
     private String csvPath;
@@ -24,7 +28,18 @@ public class DBUpdater {
     String line;
 
     @Transactional
-    public void addToSql() {
+    public void addAdminUserToDB() {
+
+        User user = User.builder()
+                .name("admin")
+                .password("1234")
+                .build();
+
+        userService.createUser(user);
+    }
+
+    @Transactional
+    public void addProductsToDB() {
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvPath))) {
 

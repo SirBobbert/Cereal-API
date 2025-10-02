@@ -27,27 +27,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(ProductController.class)
 public class ProductControllerTest {
 
-    /**
-     * MockMvc performs HTTP calls against the controller without starting a real server.
-     */
     @Autowired
     private MockMvc mockMvc;
 
-    /**
-     * ProductService is replaced by a Mockito mock and injected into the controller.
-     */
     @MockitoBean
     private ProductService productService;
 
-    /**
-     * ObjectMapper is injected to serialize/deserialize JSON payloads in tests.
-     */
     @Autowired
     private ObjectMapper objectMapper;
 
-    /**
-     * Small helper method to build Product objects quickly and reduce boilerplate.
-     */
     private static Product p(int id, String name, int fat) {
         return Product.builder().id(id).name(name).fat(fat).build();
     }
@@ -55,7 +43,6 @@ public class ProductControllerTest {
 
     @Test
     public void testCreateProduct() throws Exception {
-        // TODO: Add auth
         // Given: a request object and a stubbed service response
         Product req = Product.builder().name("Name").fat(100).build();
 
@@ -128,7 +115,7 @@ public class ProductControllerTest {
         // TODO: Add auth
         // Given: a stubbed delete response for id 1
         int id = 1;
-        when(productService.deleteProduct(id)).thenReturn(Optional.of(p(id, "Deleted", 0)));
+        when(productService.deleteProduct(id)).thenReturn(p(id, "Deleted", 0));
 
         // When: performing a DELETE request
         // Then: response should be 204 No Content
