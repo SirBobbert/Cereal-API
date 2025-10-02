@@ -58,6 +58,7 @@ public class ProductControllerTest {
         // TODO: Add auth
         // Given: a request object and a stubbed service response
         Product req = Product.builder().name("Name").fat(100).build();
+
         when(productService.createProduct(any(Product.class)))
                 .thenAnswer(inv -> Product.builder()
                         .id(1) // simulate DB-generated id
