@@ -15,12 +15,12 @@ public class CerealApplication {
         SpringApplication.run(CerealApplication.class, args);
     }
 
-    // Todo: Uncomment to load data into the database on startup
-    // This is outcommented due to interference with some tests
-    @Bean
-    CommandLineRunner loadData(DBUpdater updater) {
-        return args -> {
-            updater.addToSql();
-        };
-    }
+//    // Todo: Uncomment to load data into the database on startup
+//    // This is outcommented due to interference with some tests
+//    @Bean
+//    CommandLineRunner loadData(DBUpdater updater) {
+//        return args -> {
+//            updater.addToSql();
+//        };
+//    }
 }

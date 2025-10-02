@@ -1,6 +1,7 @@
 package SPAC.Cereal;
 
 import SPAC.Cereal.controller.ProductController;
+import SPAC.Cereal.model.Manufacturer;
 import SPAC.Cereal.model.Product;
 import SPAC.Cereal.service.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -76,7 +78,7 @@ public class ProductControllerTest {
     @Test
     public void testGetProductById() throws Exception {
         // Given: a stubbed product for id 1
-        when(productService.getOne(1)).thenReturn(Optional.of(p(1, "Name", 100)));
+        when(productService.getById(1)).thenReturn(Optional.of(p(1, "Name", 100)));
 
         // When: performing a GET request to /api/products/1
         // Then: response should be OK with expected product data
@@ -132,4 +134,41 @@ public class ProductControllerTest {
         mockMvc.perform(delete("/api/products/{id}", id))
                 .andExpect(status().isNoContent());
     }
+
+    @Test
+    public void testFilterForParameter() throws Exception {
+
+        List<Product> original = List.of(
+                Product.builder().fat(100).build(),
+                Product.builder().fat(100).build()
+        );
+
+        when(productService.findByFat(100)).thenReturn(original);
+
+        // When: performing a GET request to /api/products/1
+        // Then: response should be OK with expected product data
+        mockMvc.perform(get("/api/products/filter/fat/100"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$.[0].fat").value(100));
+    }
+
+    @Test
+    public void testFilterForMfr() throws Exception {
+
+        List<Product> original = List.of(
+                Product.builder().name("name1").fat(100).mfr(Manufacturer.N).build(),
+                Product.builder().name("name2").fat(100).mfr(Manufacturer.N).build()
+        );
+
+        when(productService.findByMfr("N")).thenReturn(original);
+
+
+        mockMvc.perform(get("/api/products/filter/mfr/N"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].mfr").value("N"));
+    }
+
+
 }

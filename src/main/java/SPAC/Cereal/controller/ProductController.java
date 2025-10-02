@@ -28,7 +28,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Product>> getProductById(@PathVariable int id) {
-        Optional<Product> product = service.getOne(id);
+        Optional<Product> product = service.getById(id);
         return ResponseEntity.ok(product);
     }
 
@@ -49,5 +49,17 @@ public class ProductController {
     public ResponseEntity<Void> deleteProduct(@PathVariable int id) {
         service.deleteProduct(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/filter/fat/{value}")
+    public ResponseEntity<List<Product>> filterProductsByFat(@PathVariable int value) {
+        List<Product> products = service.findByFat(value);
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/filter/mfr/{mfr}")
+    public ResponseEntity<List<Product>> filterProductsByManufacturer(@PathVariable String mfr) {
+        List<Product> products = service.findByMfr(mfr);
+        return ResponseEntity.ok(products);
     }
 }

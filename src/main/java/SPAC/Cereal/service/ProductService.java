@@ -1,5 +1,6 @@
 package SPAC.Cereal.service;
 
+import SPAC.Cereal.model.Manufacturer;
 import SPAC.Cereal.model.Product;
 import SPAC.Cereal.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,13 @@ public class ProductService {
         this.repository = repository;
     }
 
+
+    // CRUD
     public List<Product> getAll() {
         return repository.findAll();
     }
 
-    public Optional<Product> getOne(int id) {
+    public Optional<Product> getById(int id) {
         return repository.findById(id);
     }
 
@@ -51,17 +54,22 @@ public class ProductService {
         product.setRating(productToUpdate.getRating());
 
         return Optional.of(repository.save(product));
-
     }
 
     public Optional<Product> deleteProduct(int id) {
         Product product = repository.findById(id).orElseThrow();
-
-        System.out.println("Product to be deleted: " + product);
-
         repository.deleteById(id);
-
-        System.out.println("Product deleted.");
         return Optional.of(product);
+    }
+
+
+    // Filters
+    public List<Product> findByFat(int value) {
+        return repository.findByFat(value);
+    }
+
+    public List<Product> findByMfr(String value) {
+        Manufacturer m = Manufacturer.valueOf(value);
+        return repository.findByMfr(m);
     }
 }
