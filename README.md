@@ -24,11 +24,15 @@ information.
 - MySQL Workbench
 - Postman
 
-### Features
+### Current implemented features
 
 - CRUD operations for cereals
 - Authenticated users can create, update, and delete cereals
 - Unauthenticated users can only read cereal data
+- Filtering cereals based on attributes
+    - Calories equal to a certain value
+    - Name of the cereal manufacturer
+- Get cereal image by product ID
 - Creation of user accounts
 - Basic user authentication
 - Error handling and validation
@@ -36,13 +40,22 @@ information.
 - Logging with SLF4J
 - API documentation with Swagger
 - Integration with MySQL database
+- Script that inserts initial data into the database (products and user)
+- User login/logout functionality
+- Password hashing with BCrypt
 
-### Future features
+### Future features to be implemented
 
 - Filtering cereals based on attributes
+    - Interval filtering (e.g., calories equal/less than/higher than X and Y)
+    - Search based on multiple attributes (e.g., name and manufacturer)
+    - Sorting results based on attributes (e.g., sort by calories ascending/descending)
 - Pagination for large datasets
 - Advanced search functionality
 - User roles and permissions
+- User reset password functionality
+- Rate limiting to prevent abuse
+- HTTPS support
 
 ## Getting Started
 
@@ -95,9 +108,9 @@ information.
 ### Testing the API
 
 1. Open Postman.
-2. Use the following base URL for the API: `http://localhost:8080/api
+2. Use the following base URL for the API: `http://localhost:8080/api`
 3. Test the endpoints using Postman. You can refer to the Swagger UI for API documentation:
-    - Swagger UI: `http://localhost:8080/swagger-ui/index.html`
+    - Swagger UI: http://localhost:8080/swagger-ui/index.html
     - OpenAPI JSON: `http://localhost:8080/v3/api-docs`
 
 ## Help
