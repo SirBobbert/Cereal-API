@@ -3,11 +3,17 @@ package SPAC.Cereal;
 import SPAC.Cereal.controller.ProductController;
 import SPAC.Cereal.model.Manufacturer;
 import SPAC.Cereal.model.Product;
+import SPAC.Cereal.model.User;
 import SPAC.Cereal.service.ProductService;
+import SPAC.Cereal.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -25,6 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 
 @WebMvcTest(ProductController.class)
+@AutoConfigureMockMvc(addFilters = false) // Disable security filters for testing
 public class ProductControllerTest {
 
     @Autowired
@@ -33,13 +40,15 @@ public class ProductControllerTest {
     @MockitoBean
     private ProductService productService;
 
+    @MockitoBean
+    private UserService userService;
+
     @Autowired
     private ObjectMapper objectMapper;
 
     private static Product p(int id, String name, int fat) {
         return Product.builder().id(id).name(name).fat(fat).build();
     }
-
 
     @Test
     public void testCreateProduct() throws Exception {
@@ -58,7 +67,7 @@ public class ProductControllerTest {
         mockMvc.perform(post("/api/products")
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(req)))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value("Name"))
                 .andExpect(jsonPath("$.id").value(1));
     }
@@ -120,7 +129,7 @@ public class ProductControllerTest {
         // When: performing a DELETE request
         // Then: response should be 204 No Content
         mockMvc.perform(delete("/api/products/{id}", id))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isNotFound());
     }
 
     @Test

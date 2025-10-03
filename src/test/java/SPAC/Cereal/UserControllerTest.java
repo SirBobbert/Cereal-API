@@ -37,13 +37,7 @@ public class UserControllerTest {
                 .password("1234")
                 .build();
 
-        User resp = User.builder()
-                .id(1)
-                .name("Bob")
-                .password("$2a$hash") // eller bare "1234" hvis du vil holde det simpelt
-                .build();
-
-        when(userService.createUser(any(User.class))).thenReturn(resp);
+        when(userService.createUser(any(User.class))).thenReturn(req);
 
         mockMvc.perform(post("/api/users/create")
                         .contentType(MediaType.APPLICATION_JSON)
