@@ -6,13 +6,13 @@ Kravspecifikationer:
 
 # Cereal API
 
-A simple RESTful API for managing a collection of cereals.
+A simple RESTful API for managing a collection of cereals written in Java using Spring Boot.
 
 ## Description
 
 This is a simple implementation of a RESTful API for managing a collection of cereals.
 The API allows authorized users to perform CRUD (Create, Read, Update, Delete) operations on cereal data stored in a SQL
-database. It is required to be authorized before being able to perform CRUD-operations (except for GET operationer).
+database. It is required to be authorized before being able to perform CRUD-operations (except for GET operation).
 It is also possible to filter cereals based on various attributes such as name, manufacturer, and nutritional
 information.
 
@@ -38,6 +38,7 @@ information.
 - Error handling and validation
 - Unit tests/controller slice tests
 - Logging with SLF4J
+- Code comments
 - API documentation with Swagger
 - Integration with MySQL database
 - Script that inserts initial data into the database (products and user)
@@ -56,6 +57,8 @@ information.
 - User reset password functionality
 - Rate limiting to prevent abuse
 - HTTPS support
+- More comprehensive logging
+- More comprehensive code comments and documentation
 
 ## Getting Started
 
@@ -92,7 +95,7 @@ information.
    spring.datasource.url=jdbc:mysql://localhost:3306/cereal_db
    spring.datasource.username=your_username
    spring.datasource.password=your_password
-   spring.jpa.hibernate.ddl-auto=update
+   spring.jpa.hibernate.ddl-auto=create-drop
    ```
 
 5. Build the project using Maven:
@@ -105,13 +108,39 @@ information.
     mvn spring-boot:run
     ```
 
+7. The application should now be running at http://localhost:8080.
+8. Quit:
+    - If running in terminal: `Ctrl + C`
+    - If running in IDE: Stop the run configuration
+
 ### Testing the API
 
 1. Open Postman.
-2. Use the following base URL for the API: `http://localhost:8080/api`
+2. Use the following base URL for the API: http://localhost:8080/api
 3. Test the endpoints using Postman. You can refer to the Swagger UI for API documentation:
     - Swagger UI: http://localhost:8080/swagger-ui/index.html
-    - OpenAPI JSON: `http://localhost:8080/v3/api-docs`
+    - OpenAPI JSON: http://localhost:8080/v3/api-docs
+
+### Swagger UI Documentation
+
+The API is documented using Swagger. You can access the Swagger UI at:
+http://localhost:8080/swagger-ui/index.html
+
+Here you can see all the available endpoints, their request/response formats, and test them directly from the UI.
+
+Swagger UI provides an interactive interface to explore and test the API endpoints.
+It also includes information about request parameters, response formats, and error codes.
+Schemas for request and response bodies are also documented.
+
+Example endpoints:
+
+- `GET /api/products` - Get all cereals
+- `GET /api/products/{id}` - Get a cereal by ID
+- `POST /api/products` - Create a new cereal (requires authentication)
+- `PUT /api/products/{id}` - Update a cereal by ID (requires authentication)
+- `DELETE /api/products/{id}` - Delete a cereal by ID (requires authentication)
+
+### Running Tests
 
 ## Help
 

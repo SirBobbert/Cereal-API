@@ -308,3 +308,126 @@ Consider renaming one of the beans or enabling overriding by setting spring.main
 2025-10-03T13:21:57.376+02:00  INFO 21772 --- [Cereal] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-10-03T13:21:57.401+02:00  INFO 21772 --- [Cereal] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2025-10-03T13:21:57.406+02:00  INFO 21772 --- [Cereal] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-10-03T13:22:03.097+02:00  INFO 10024 --- [Cereal] [main] SPAC.Cereal.CerealApplication            : Starting CerealApplication using Java 21.0.8 with PID 10024 (C:\Specialisterne - Opgaver\Uge 3\Cereal\target\classes started by SPAC-41 in C:\Specialisterne - Opgaver\Uge 3\Cereal)
+2025-10-03T13:22:03.104+02:00  INFO 10024 --- [Cereal] [main] SPAC.Cereal.CerealApplication            : No active profile set, falling back to 1 default profile: "default"
+2025-10-03T13:22:04.119+02:00  INFO 10024 --- [Cereal] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-03T13:22:04.207+02:00  INFO 10024 --- [Cereal] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 67 ms. Found 2 JPA repository interfaces.
+2025-10-03T13:22:04.846+02:00  INFO 10024 --- [Cereal] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-03T13:22:04.863+02:00  INFO 10024 --- [Cereal] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-03T13:22:04.864+02:00  INFO 10024 --- [Cereal] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-10-03T13:22:04.940+02:00  INFO 10024 --- [Cereal] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-10-03T13:22:04.940+02:00  INFO 10024 --- [Cereal] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1782 ms
+2025-10-03T13:22:05.197+02:00  INFO 10024 --- [Cereal] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-03T13:22:05.265+02:00  INFO 10024 --- [Cereal] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-10-03T13:22:05.312+02:00  INFO 10024 --- [Cereal] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-03T13:22:05.636+02:00  INFO 10024 --- [Cereal] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-03T13:22:05.674+02:00  INFO 10024 --- [Cereal] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-03T13:22:05.993+02:00  INFO 10024 --- [Cereal] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@533e2f4
+2025-10-03T13:22:05.995+02:00  INFO 10024 --- [Cereal] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-03T13:22:06.069+02:00  INFO 10024 --- [Cereal] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.43
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-03T13:22:06.811+02:00  INFO 10024 --- [Cereal] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-03T13:22:07.248+02:00  INFO 10024 --- [Cereal] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-03T13:22:07.715+02:00  WARN 10024 --- [Cereal] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-03T13:22:07.967+02:00  INFO 10024 --- [Cereal] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name dbUserDetailsService
+2025-10-03T13:22:08.400+02:00  INFO 10024 --- [Cereal] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-10-03T13:22:08.408+02:00  INFO 10024 --- [Cereal] [main] SPAC.Cereal.CerealApplication            : Started CerealApplication in 5.919 seconds (process running for 6.307)
+2025-10-03T13:22:37.370+02:00  INFO 10024 --- [Cereal] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-03T13:22:38.020+02:00  INFO 10024 --- [Cereal] [http-nio-8080-exec-10] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 255 ms
+2025-10-03T13:30:52.488+02:00  INFO 8972 --- [Cereal] [main] SPAC.Cereal.CerealApplication            : Starting CerealApplication using Java 21.0.8 with PID 8972 (C:\Specialisterne - Opgaver\Uge 3\Cereal\target\classes started by SPAC-41 in C:\Specialisterne - Opgaver\Uge 3\Cereal)
+2025-10-03T13:30:52.491+02:00  INFO 8972 --- [Cereal] [main] SPAC.Cereal.CerealApplication            : No active profile set, falling back to 1 default profile: "default"
+2025-10-03T13:30:53.020+02:00  INFO 8972 --- [Cereal] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-03T13:30:53.073+02:00  INFO 8972 --- [Cereal] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 45 ms. Found 2 JPA repository interfaces.
+2025-10-03T13:30:53.426+02:00  INFO 8972 --- [Cereal] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-03T13:30:53.436+02:00  INFO 8972 --- [Cereal] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-03T13:30:53.436+02:00  INFO 8972 --- [Cereal] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-10-03T13:30:53.483+02:00  INFO 8972 --- [Cereal] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-10-03T13:30:53.484+02:00  INFO 8972 --- [Cereal] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 963 ms
+2025-10-03T13:30:53.594+02:00  INFO 8972 --- [Cereal] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-03T13:30:53.629+02:00  INFO 8972 --- [Cereal] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-10-03T13:30:53.651+02:00  INFO 8972 --- [Cereal] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-03T13:30:53.823+02:00  INFO 8972 --- [Cereal] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-03T13:30:53.844+02:00  INFO 8972 --- [Cereal] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-03T13:30:54.058+02:00  INFO 8972 --- [Cereal] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@126a9a3d
+2025-10-03T13:30:54.060+02:00  INFO 8972 --- [Cereal] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-03T13:30:54.116+02:00  INFO 8972 --- [Cereal] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.43
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-03T13:30:54.685+02:00  INFO 8972 --- [Cereal] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-03T13:30:54.766+02:00  INFO 8972 --- [Cereal] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-03T13:30:55.061+02:00  WARN 8972 --- [Cereal] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-03T13:30:55.218+02:00  INFO 8972 --- [Cereal] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name dbUserDetailsService
+2025-10-03T13:30:55.454+02:00  WARN 8972 --- [Cereal] [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2025-10-03T13:30:55.456+02:00  INFO 8972 --- [Cereal] [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-03T13:30:55.481+02:00  INFO 8972 --- [Cereal] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-10-03T13:30:55.486+02:00  INFO 8972 --- [Cereal] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-10-03T13:30:55.499+02:00  INFO 8972 --- [Cereal] [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-10-03T13:30:55.511+02:00 ERROR 8972 --- [Cereal] [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2025-10-03T13:31:01.990+02:00  INFO 10024 --- [Cereal] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-03T13:31:02.003+02:00  INFO 10024 --- [Cereal] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-03T13:31:02.007+02:00  INFO 10024 --- [Cereal] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-03T13:31:02.017+02:00  INFO 10024 --- [Cereal] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-10-03T13:31:02.022+02:00  INFO 10024 --- [Cereal] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-10-03T13:32:59.942+02:00  INFO 16840 --- [Cereal] [main] SPAC.Cereal.CerealApplication            : Starting CerealApplication using Java 21.0.8 with PID 16840 (C:\Specialisterne - Opgaver\Uge 3\Cereal\target\classes started by SPAC-41 in C:\Specialisterne - Opgaver\Uge 3\Cereal)
+2025-10-03T13:32:59.943+02:00  INFO 16840 --- [Cereal] [main] SPAC.Cereal.CerealApplication            : No active profile set, falling back to 1 default profile: "default"
+2025-10-03T13:33:00.471+02:00  INFO 16840 --- [Cereal] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-03T13:33:00.513+02:00  INFO 16840 --- [Cereal] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 35 ms. Found 2 JPA repository interfaces.
+2025-10-03T13:33:00.861+02:00  INFO 16840 --- [Cereal] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-10-03T13:33:00.871+02:00  INFO 16840 --- [Cereal] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-03T13:33:00.872+02:00  INFO 16840 --- [Cereal] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-10-03T13:33:00.916+02:00  INFO 16840 --- [Cereal] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-10-03T13:33:00.916+02:00  INFO 16840 --- [Cereal] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 940 ms
+2025-10-03T13:33:01.043+02:00  INFO 16840 --- [Cereal] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-03T13:33:01.080+02:00  INFO 16840 --- [Cereal] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-10-03T13:33:01.103+02:00  INFO 16840 --- [Cereal] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-03T13:33:01.285+02:00  INFO 16840 --- [Cereal] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-03T13:33:01.309+02:00  INFO 16840 --- [Cereal] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-03T13:33:01.500+02:00  INFO 16840 --- [Cereal] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@51a719e7
+2025-10-03T13:33:01.502+02:00  INFO 16840 --- [Cereal] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-03T13:33:01.556+02:00  INFO 16840 --- [Cereal] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.43
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-10-03T13:33:02.144+02:00  INFO 16840 --- [Cereal] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-03T13:33:02.608+02:00  INFO 16840 --- [Cereal] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-03T13:33:02.909+02:00  WARN 16840 --- [Cereal] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-03T13:33:03.053+02:00  INFO 16840 --- [Cereal] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name dbUserDetailsService
+2025-10-03T13:33:03.310+02:00  INFO 16840 --- [Cereal] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-10-03T13:33:03.317+02:00  INFO 16840 --- [Cereal] [main] SPAC.Cereal.CerealApplication            : Started CerealApplication in 3.691 seconds (process running for 3.93)
+2025-10-03T13:33:28.844+02:00  INFO 16840 --- [Cereal] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-03T13:33:29.378+02:00  INFO 16840 --- [Cereal] [http-nio-8080-exec-9] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 212 ms
+2025-10-03T13:35:03.235+02:00  INFO 16840 --- [Cereal] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-03T13:35:03.247+02:00  INFO 16840 --- [Cereal] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-03T13:35:03.250+02:00  INFO 16840 --- [Cereal] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-03T13:35:03.276+02:00  INFO 16840 --- [Cereal] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-10-03T13:35:03.283+02:00  INFO 16840 --- [Cereal] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
