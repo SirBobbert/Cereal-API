@@ -7,17 +7,24 @@ import SPAC.Cereal.model.User;
 import SPAC.Cereal.service.ProductService;
 import SPAC.Cereal.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.coyote.Response;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 
+import java.awt.*;
+import java.nio.file.Path;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -104,7 +111,6 @@ public class ProductControllerTest {
 
     @Test
     public void testUpdateProductById() throws Exception {
-        // TODO: Add auth
         // Given: an updated product stub
         Product updated = p(1, "UpdatedName", 150);
         when(productService.updateProduct(1, updated)).thenReturn(Optional.of(updated));
@@ -165,6 +171,21 @@ public class ProductControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
                 .andExpect(jsonPath("$[0].mfr").value("N"));
+    }
+
+    @Test
+    public void getProductImageById() throws Exception {
+
+        Product product = Product.builder().id(1).name("100% Bran").build();
+
+        when(productService.getImageResourceById(product.getId())).thenReturn(
+                new org.springframework.core.io.ClassPathResource("static/images/" + product.getName() + ".jpg")
+        );
+
+
+        mockMvc.perform(get("/api/products/image/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.IMAGE_JPEG));
     }
 
 

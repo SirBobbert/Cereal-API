@@ -2,11 +2,15 @@ package SPAC.Cereal.controller;
 
 import SPAC.Cereal.model.Product;
 import SPAC.Cereal.service.ProductService;
+import jakarta.servlet.ServletContext;
 import jakarta.validation.Valid;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
 
@@ -16,7 +20,7 @@ public class ProductController {
 
     private final ProductService service;
 
-    public ProductController(ProductService service) {
+    public ProductController(ProductService service, ServletContext servletContext) {
         this.service = service;
     }
 
@@ -63,4 +67,23 @@ public class ProductController {
     public ResponseEntity<List<Product>> filterByMfr(@PathVariable String mfr) {
         return ResponseEntity.ok(service.findByMfr(mfr));
     }
+
+
+    @GetMapping(value = "/image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<Resource> getImageById(@PathVariable int id) {
+        Resource img = service.getImageResourceById(id);
+        if (!img.exists() || !img.isReadable()) {
+            System.out.println("Image not found for product id: " + id);
+            return ResponseEntity.notFound().build();
+        } else {
+
+            System.out.println("Image found for product id: " + id);
+            return ResponseEntity
+                    .ok()
+                    .contentType(MediaType.IMAGE_JPEG)
+                    .body(img);
+
+        }
+    }
+
 }

@@ -3,6 +3,8 @@ package SPAC.Cereal.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.InputStream;
+
 @Data
 @Builder
 @AllArgsConstructor
