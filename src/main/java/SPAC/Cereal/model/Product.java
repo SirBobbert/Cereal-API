@@ -3,7 +3,9 @@ package SPAC.Cereal.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.io.InputStream;
+/*
+    Product entity representing a cereal product with various nutritional attributes.
+*/
 
 @Data
 @Builder
@@ -35,4 +37,5 @@ public class Product {
     private float weight;
     private float cups;
     private float rating;
+    private String test;
 }

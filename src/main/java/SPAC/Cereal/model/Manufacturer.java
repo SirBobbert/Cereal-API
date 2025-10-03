@@ -11,6 +11,7 @@ public enum Manufacturer {
 
     private final String fullName;
 
+    // Returns the full name of the manufacturer
     Manufacturer(String fullName) {
         this.fullName = fullName;
     }

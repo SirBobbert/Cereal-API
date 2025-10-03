@@ -11,30 +11,43 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/*
+    ProductService provides business logic for managing products.
+    It interacts with the ProductRepository to perform CRUD operations,
+    filtering, and retrieving product images.
+*/
+
 @Service
 public class ProductService {
 
+    // Repository for product data access
     private final ProductRepository repository;
 
+
+    // Constructor-based dependency injection
     @Autowired
     public ProductService(ProductRepository repository) {
         this.repository = repository;
     }
 
+    // CRUD Operations
 
-    // CRUD
+    // Retrieve all products
     public List<Product> getAll() {
         return repository.findAll();
     }
 
+    // Retrieve a product by its ID
     public Optional<Product> getById(int id) {
         return repository.findById(id);
     }
 
+    // Create a new product
     public Product createProduct(Product product) {
         return repository.save(product);
     }
 
+    // Update an existing product by its ID
     public Optional<Product> updateProduct(int id, Product productToUpdate) {
         Product product = repository.findById(id).orElseThrow();
 
@@ -58,6 +71,7 @@ public class ProductService {
         return Optional.of(repository.save(product));
     }
 
+    // Delete a product by its ID
     public Product deleteProduct(int id) {
         Product product = repository.findById(id).orElseThrow();
         repository.deleteById(id);
@@ -66,17 +80,22 @@ public class ProductService {
 
 
     // Filters
+
+    // Find products by exact fat content
     public List<Product> findByFat(int value) {
         return repository.findByFat(value);
     }
 
+    // Find products by manufacturer
     public List<Product> findByMfr(String value) {
         Manufacturer m = Manufacturer.valueOf(value);
         return repository.findByMfr(m);
     }
 
+    // Retrieve product image by product ID
     public Resource getImageResourceById(int id) {
 
+        // TODO:
         // Should probably use mfr instead of name due to when creating a new product
         // the name might not match an existing image file.
 

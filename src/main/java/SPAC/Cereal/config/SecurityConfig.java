@@ -1,4 +1,3 @@
-// src/main/java/SPAC/Cereal/config/SecurityConfig.java
 package SPAC.Cereal.config;
 
 import org.springframework.context.annotation.Bean;
@@ -14,10 +13,24 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+
+/*
+    SecurityConfig configures security settings for the application.
+    It defines access rules for various endpoints and sets up basic authentication.
+*/
+
 public class SecurityConfig {
 
+    // Configure security filter chain
+    // Define access rules and authentication methods
+    // Authentication is required for modifying product data
+    // User creation and get requests to products are publicly accessible
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        // Disable CSRF for simplicity in this example
+        // Configure authorization rules for endpoints
+        // Use HTTP Basic authentication
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()

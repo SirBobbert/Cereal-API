@@ -6,6 +6,7 @@ public enum CerealType {
 
     private final String type;
 
+    // Returns the string representation of the cereal type
     CerealType(String type) {
         this.type = type;
     }

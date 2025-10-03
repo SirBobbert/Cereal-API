@@ -8,6 +8,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/*
+    User entity representing a user with an ID, name, and password.
+*/
+
 @Data
 @Builder
 @AllArgsConstructor

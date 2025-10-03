@@ -5,7 +5,6 @@ import SPAC.Cereal.model.Manufacturer;
 import SPAC.Cereal.model.Product;
 import SPAC.Cereal.model.User;
 import SPAC.Cereal.repository.ProductRepository;
-import SPAC.Cereal.repository.UserRepository;
 import SPAC.Cereal.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -14,19 +13,31 @@ import org.springframework.stereotype.Component;
 
 import java.io.*;
 
+/*
+    DBUpdater is a utility component for populating the database with initial data.
+    It reads product data from a CSV file, validates and normalizes it, and inserts it into the database.
+    It also provides a method to add an authorized user to the database.
+*/
+
 @Component
 @RequiredArgsConstructor
 public class DBUpdater {
 
+    // Repository for product data access
     private final ProductRepository productRepository;
+
+    // Service layer for user operations
     private final UserService userService;
 
+    // Path to the CSV file containing product data
     @Value("${data.csv.path}")
     private String csvPath;
 
+    // Counters and temporary variables
     int lineNo, inserted = 0;
     String line;
 
+    // Adds an admin user to the database with predefined credentials
     @Transactional
     public void addAdminUserToDB() {
 
@@ -38,9 +49,12 @@ public class DBUpdater {
         userService.createUser(user);
     }
 
+    // Reads products from the CSV file, validates, normalizes, and populates the database
     @Transactional
     public void addProductsToDB() {
 
+
+        // read CSV file
         try (BufferedReader br = new BufferedReader(new FileReader(csvPath))) {
 
             // skip header lines
@@ -99,13 +113,10 @@ public class DBUpdater {
         System.out.println("================================================");
     }
 
-    // iterates through each line, validates and normalizes them
-    // normalization: trims whitespace, replaces commas with dots in floats, removes extra dots in rating
-    // validation: checks for null/empty, correct enum values, correct number formats
-    // returns normalized array or throws IllegalArgumentException
+    // Validates and normalizes the input data array
     public static String[] validateAndNormalize(String[] data) {
 
-        // check for null or incorrect length
+        // check lines for null or incorrect length (should be 16 fields)
         if (data == null || data.length != 16)
             throw new IllegalArgumentException("Expected 16 fields, got " + (data == null ? 0 : data.length));
 
@@ -116,10 +127,9 @@ public class DBUpdater {
             data[i] = data[i].trim();
         }
 
-        // validate enums
+        // Check if manufacturer and cereal type codes are valid
         if (!data[1].matches("[AGKNPQR]"))
             throw new IllegalArgumentException("Invalid manufacturer code: " + data[1]);
-
         if (!data[2].matches("[HC]"))
             throw new IllegalArgumentException("Invalid cereal type code: " + data[2]);
 
