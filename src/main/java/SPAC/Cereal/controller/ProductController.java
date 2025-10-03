@@ -72,6 +72,9 @@ public class ProductController {
 
     @GetMapping(value = "/image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<Resource> getImageById(@PathVariable int id) {
+
+        // access this via http://localhost:8080/api/products/image/1
+
         Resource img = service.getImageResourceById(id);
         if (!img.exists() || !img.isReadable()) {
             log.warn("Image not found or not readable for product id: {}", id);
