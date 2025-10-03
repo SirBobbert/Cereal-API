@@ -213,3 +213,8 @@ java.util.NoSuchElementException: No value present
 2025-10-03T12:28:04.639+02:00  INFO 20648 --- [Cereal] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
 2025-10-03T12:28:04.650+02:00  INFO 20648 --- [Cereal] [main] SPAC.Cereal.CerealApplication            : Started CerealApplication in 5.389 seconds (process running for 5.744)
 2025-10-03T12:28:23.661+02:00  INFO 20648 --- [Cereal] [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-03T12:32:32.514+02:00  INFO 20648 --- [Cereal] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-03T12:32:32.528+02:00  INFO 20648 --- [Cereal] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-10-03T12:32:32.532+02:00  INFO 20648 --- [Cereal] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-03T12:32:32.559+02:00  INFO 20648 --- [Cereal] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-10-03T12:32:32.564+02:00  INFO 20648 --- [Cereal] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
