@@ -3,15 +3,11 @@ package SPAC.Cereal.service;
 import SPAC.Cereal.model.Manufacturer;
 import SPAC.Cereal.model.Product;
 import SPAC.Cereal.repository.ProductRepository;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,6 +76,9 @@ public class ProductService {
     }
 
     public Resource getImageResourceById(int id) {
+
+        // Should probably use mfr instead of name due to when creating a new product
+        // the name might not match an existing image file.
 
         Product product = getById(id).orElseThrow();
         String productName = product.getName();

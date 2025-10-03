@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Bean;
 @RequiredArgsConstructor
 public class CerealApplication {
 
+    // TODO: Readme + comments
+
     public static void main(String[] args) {
         SpringApplication.run(CerealApplication.class, args);
     }
