@@ -4,16 +4,17 @@ import SPAC.Cereal.model.Product;
 import SPAC.Cereal.service.ProductService;
 import jakarta.servlet.ServletContext;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
@@ -73,11 +74,11 @@ public class ProductController {
     public ResponseEntity<Resource> getImageById(@PathVariable int id) {
         Resource img = service.getImageResourceById(id);
         if (!img.exists() || !img.isReadable()) {
-            System.out.println("Image not found for product id: " + id);
+            log.warn("Image not found or not readable for product id: {}", id);
             return ResponseEntity.notFound().build();
         } else {
 
-            System.out.println("Image found for product id: " + id);
+            log.info("Image found for product id: {}", id);
             return ResponseEntity
                     .ok()
                     .contentType(MediaType.IMAGE_JPEG)
