@@ -3,6 +3,7 @@ package SPAC.Cereal.service;
 import SPAC.Cereal.model.Manufacturer;
 import SPAC.Cereal.model.Product;
 import SPAC.Cereal.repository.ProductRepository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -72,10 +73,14 @@ public class ProductService {
     }
 
     // Delete a product by its ID
-    public Product deleteProduct(int id) {
-        Product product = repository.findById(id).orElseThrow();
-        repository.deleteById(id);
-        return product;
+    @Transactional
+    public Optional<Product> deleteProduct(int id) {
+
+        return repository.findById(id).map(p -> {
+            repository.delete(p);
+            return p;
+        });
+
     }
 
 

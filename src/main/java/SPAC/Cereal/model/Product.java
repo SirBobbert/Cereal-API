@@ -37,5 +37,4 @@ public class Product {
     private float weight;
     private float cups;
     private float rating;
-    private String test;
 }

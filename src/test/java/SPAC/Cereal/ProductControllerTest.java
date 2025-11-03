@@ -120,7 +120,7 @@ public class ProductControllerTest {
         // TODO: Add auth
         // Given: a stubbed delete response for id 1
         int id = 1;
-        when(productService.deleteProduct(id)).thenReturn(p(id, "Deleted", 0));
+        when(productService.deleteProduct(id)).thenReturn(Optional.ofNullable(p(id, "Deleted", 0)));
 
         // When: performing a DELETE request
         // Then: response should be 204 No Content

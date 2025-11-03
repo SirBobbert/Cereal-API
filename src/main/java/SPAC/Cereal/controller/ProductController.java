@@ -70,10 +70,12 @@ public class ProductController {
 
     // Delete a product by its ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable int id) {
+    public ResponseEntity<Void> delete(@PathVariable int id) {
         if (service.getById(id).isEmpty()) return ResponseEntity.notFound().build();
-        return null;
+        service.deleteProduct(id);
+        return ResponseEntity.noContent().build(); // 204
     }
+
 
     // Filter products by exact calories value
     @GetMapping("/filter/fat/{value}")
