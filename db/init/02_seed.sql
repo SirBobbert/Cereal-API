@@ -19,7 +19,7 @@ INSERT INTO manufacturer (name) VALUES
 
 -- Password hashes generated using bcrypt
 -- 1234
-INSERT INTO users (username, password_hash)
+INSERT INTO users (username, password)
 VALUES
   ('admin', '$2a$10$QxF4bW0X0m7Yt1pQX1yGxu4UO8Qm9C8b4WcQjv2nC2h7I6QxO1f1y'),
   ('alice', '$2a$10$eW5vQkNyS3lQbGFjZUludG8l4q3Zpo8GmIu1X9cWZyC9F4yM9y8nW.');

@@ -10,6 +10,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 /*
@@ -23,7 +24,6 @@ public class ProductService {
 
     // Repository for product data access
     private final ProductRepository repository;
-
 
     // Constructor-based dependency injection
     @Autowired
@@ -48,41 +48,38 @@ public class ProductService {
         return repository.save(product);
     }
 
-    // Update an existing product by its ID
+    // Return Optional.empty instead of throwing when id is missing
     public Optional<Product> updateProduct(int id, Product productToUpdate) {
-        Product product = repository.findById(id).orElseThrow();
-
-        product.setName(productToUpdate.getName());
-        product.setMfr(productToUpdate.getMfr());
-        product.setType(productToUpdate.getType());
-        product.setCalories(productToUpdate.getCalories());
-        product.setProtein(productToUpdate.getProtein());
-        product.setFat(productToUpdate.getFat());
-        product.setSodium(productToUpdate.getSodium());
-        product.setFiber(productToUpdate.getFiber());
-        product.setCarbo(productToUpdate.getCarbo());
-        product.setSugars(productToUpdate.getSugars());
-        product.setPotass(productToUpdate.getPotass());
-        product.setVitamins(productToUpdate.getVitamins());
-        product.setShelf(productToUpdate.getShelf());
-        product.setWeight(productToUpdate.getWeight());
-        product.setCups(productToUpdate.getCups());
-        product.setRating(productToUpdate.getRating());
-
-        return Optional.of(repository.save(product));
+        return repository.findById(id).map(product -> {
+            // Set all mutable fields
+            product.setName(productToUpdate.getName());
+            product.setMfr(productToUpdate.getMfr());
+            product.setType(productToUpdate.getType());
+            product.setCalories(productToUpdate.getCalories());
+            product.setProtein(productToUpdate.getProtein());
+            product.setFat(productToUpdate.getFat());
+            product.setSodium(productToUpdate.getSodium());
+            product.setFiber(productToUpdate.getFiber());
+            product.setCarbo(productToUpdate.getCarbo());
+            product.setSugars(productToUpdate.getSugars());
+            product.setPotass(productToUpdate.getPotass());
+            product.setVitamins(productToUpdate.getVitamins());
+            product.setShelf(productToUpdate.getShelf());
+            product.setWeight(productToUpdate.getWeight());
+            product.setCups(productToUpdate.getCups());
+            product.setRating(productToUpdate.getRating());
+            return repository.save(product);
+        });
     }
 
-    // Delete a product by its ID
+    // Delete a product by its ID. Returns the deleted entity or empty if not found.
     @Transactional
     public Optional<Product> deleteProduct(int id) {
-
         return repository.findById(id).map(p -> {
             repository.delete(p);
             return p;
         });
-
     }
-
 
     // Filters
 
@@ -91,25 +88,24 @@ public class ProductService {
         return repository.findByFat(value);
     }
 
-    // Find products by manufacturer
+    // Parse manufacturer in a case-insensitive way, return empty list on bad value
     public List<Product> findByMfr(String value) {
-        Manufacturer m = Manufacturer.valueOf(value);
-        return repository.findByMfr(m);
+        try {
+            Manufacturer m = Manufacturer.valueOf(value.toUpperCase(Locale.ROOT));
+            return repository.findByMfr(m);
+        } catch (IllegalArgumentException ex) {
+            return List.of();
+        }
     }
 
     // Retrieve product image by product ID
     public Resource getImageResourceById(int id) {
-
-        // TODO:
-        // Should probably use mfr instead of name due to when creating a new product
-        // the name might not match an existing image file.
-
+        // Note: name-based lookup is brittle when names contain symbols
         Product product = getById(id).orElseThrow();
         String productName = product.getName();
 
         ClassPathResource img = new ClassPathResource("static/images/" + productName + ".jpg");
         if (!img.exists()) img = new ClassPathResource("static/images/no-image.jpg");
-
         return img;
     }
 }

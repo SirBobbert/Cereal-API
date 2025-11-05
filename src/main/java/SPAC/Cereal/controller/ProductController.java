@@ -2,7 +2,6 @@ package SPAC.Cereal.controller;
 
 import SPAC.Cereal.model.Product;
 import SPAC.Cereal.service.ProductService;
-import jakarta.servlet.ServletContext;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +59,6 @@ public class ProductController {
     }
 
     // Update an existing product by its ID
-    // TODO: patch vs put
     @PutMapping("/{id}")
     public ResponseEntity<Product> update(@PathVariable int id, @RequestBody @Valid Product payload) {
         return service.updateProduct(id, payload)
@@ -68,16 +66,15 @@ public class ProductController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Delete a product by its ID
+    // Use deleteProduct's Optional to decide status
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
-        if (service.getById(id).isEmpty()) return ResponseEntity.notFound().build();
-        service.deleteProduct(id);
-        return ResponseEntity.noContent().build(); // 204
+        return service.deleteProduct(id).isPresent()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.notFound().build();
     }
 
-
-    // Filter products by exact calories value
+    // Filter products by exact fat value
     @GetMapping("/filter/fat/{value}")
     public ResponseEntity<List<Product>> filterByFat(@PathVariable int value) {
         return ResponseEntity.ok(service.findByFat(value));
@@ -92,20 +89,14 @@ public class ProductController {
     // Get product image by product ID
     @GetMapping(value = "/image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<Resource> getImageById(@PathVariable int id) {
-
-        // Fetch the image resource using the service layer
         Resource img = service.getImageResourceById(id);
+
+        // Log and return 404 if missing or unreadable
         if (!img.exists() || !img.isReadable()) {
             log.warn("Image not found or not readable for product id: {}", id);
             return ResponseEntity.notFound().build();
-        } else {
-
-            log.info("Image found for product id: {}", id);
-            return ResponseEntity
-                    .ok()
-                    .contentType(MediaType.IMAGE_JPEG)
-                    .body(img);
         }
-    }
 
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(img);
+    }
 }
