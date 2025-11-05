@@ -1,0 +1,45 @@
+GitHub Actions
+
+Push til dev
+
+Kører unit/integration-tests.
+
+Hvis grønt: opretter/opdaterer PR dev → main og sætter auto-merge.
+
+Hvis rødt: ingen merge.
+
+Branch protection på main
+
+Kræv PR + “Required status checks” for test-jobbet.
+
+Ingen direkte push til main.
+
+
+
+Docker Hub (bygning sker i Jenkins, men målet er Docker Hub)
+
+Når main opdateres
+
+Jenkins trigges.
+
+Jenkins bygger Docker-image fra koden på den commit.
+
+Jenkins tagger docker.io/<user>/<image>:<git-sha> og evt. :latest.
+
+Jenkins pusher til Docker Hub.
+
+Credentials
+
+Docker Hub access token gemmes i Jenkins Credentials.
+
+Actions bruger ikke Docker Hub her, kun tests og PR-flow.
+
+
+
+Output og sporbarhed
+
+Ét “build of record”: image i Docker Hub tagget med commit SHA.
+
+main peger altid på et image der består tests.
+
+Rollback = deploy forrige SHA-tag.
