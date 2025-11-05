@@ -1,4 +1,4 @@
-USE cereal_api;
+USE cereal_db;
 
 LOAD DATA INFILE '/var/lib/mysql-files/data.csv'
 INTO TABLE product

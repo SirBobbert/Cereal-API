@@ -1,45 +1,61 @@
 services:
-  app:
+  cereal-app:
+    container_name: cereal_app
     build:
       context: .
       dockerfile: Dockerfile
     depends_on:
-      database:
+      cereal-database:
+        # waits for DB health before starting app
         condition: service_healthy
+    # put app on the custom network
+    networks: [app-network]
     environment:
       DATA_CSV_PATH: /app/data.csv
-      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/cereal_api
+      # uses the DB container alias defined in networks
+      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/cereal_db
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: secret
       SERVER_PORT: "8080"
+    # expose app to host
     ports:
       - "8080:8080"
     restart: unless-stopped
 
-  database:
-    image: mysql:latest
-    container_name: my_database
+  cereal-database:
+    image: mysql:8.0
+    container_name: cereal_db
+    # put DB on the custom network
+    networks:
+      app-network:
+        aliases: [database]
     environment:
       MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: cereal_api
+      MYSQL_DATABASE: cereal_db
       MYSQL_USER: user
       MYSQL_PASSWORD: secret
     volumes:
       - db-data:/var/lib/mysql
+      # run init SQL scripts on first boot
       - ./db/init:/docker-entrypoint-initdb.d:ro
       - ./import:/var/lib/mysql-files
+    # map DB to host port 3307 for local access - containers still use 3306
     ports:
       - "3307:3306"
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p1234"]
+      # use CMD-shell so the password env is expanded reliably
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -p$${MYSQL_ROOT_PASSWORD} || exit 1"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
     restart: unless-stopped
 
 volumes:
   db-data:
 
+networks:
+  app-network:
+    driver: bridge
 
 
 
